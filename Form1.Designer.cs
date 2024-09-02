@@ -65,13 +65,13 @@
             button_Convert_File.Name = "button_Convert_File";
             button_Convert_File.Size = new Size(137, 39);
             button_Convert_File.TabIndex = 1;
-            button_Convert_File.Text = "Convert Files";
+            button_Convert_File.Text = "Convert files";
             button_Convert_File.UseVisualStyleBackColor = true;
             button_Convert_File.Click += button_Convert_File_Click;
             // 
             // button_Convert_Directory
             // 
-            button_Convert_Directory.Location = new Point(651, 112);
+            button_Convert_Directory.Location = new Point(651, 96);
             button_Convert_Directory.Name = "button_Convert_Directory";
             button_Convert_Directory.Size = new Size(137, 47);
             button_Convert_Directory.TabIndex = 2;
@@ -124,21 +124,21 @@
             // 
             // textBox_X
             // 
-            textBox_X.Location = new Point(695, 195);
+            textBox_X.Location = new Point(695, 177);
             textBox_X.Name = "textBox_X";
             textBox_X.Size = new Size(93, 23);
             textBox_X.TabIndex = 7;
             // 
             // textBox_Y
             // 
-            textBox_Y.Location = new Point(695, 224);
+            textBox_Y.Location = new Point(695, 206);
             textBox_Y.Name = "textBox_Y";
             textBox_Y.Size = new Size(93, 23);
             textBox_Y.TabIndex = 8;
             // 
             // textBox_Quality
             // 
-            textBox_Quality.Location = new Point(695, 272);
+            textBox_Quality.Location = new Point(695, 254);
             textBox_Quality.Name = "textBox_Quality";
             textBox_Quality.Size = new Size(93, 23);
             textBox_Quality.TabIndex = 9;
@@ -146,7 +146,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(651, 198);
+            label1.Location = new Point(644, 180);
             label1.Name = "label1";
             label1.Size = new Size(42, 15);
             label1.TabIndex = 10;
@@ -155,7 +155,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(651, 227);
+            label2.Location = new Point(644, 209);
             label2.Name = "label2";
             label2.Size = new Size(46, 15);
             label2.TabIndex = 11;
@@ -164,7 +164,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(644, 275);
+            label3.Location = new Point(644, 257);
             label3.Name = "label3";
             label3.Size = new Size(48, 15);
             label3.TabIndex = 12;
@@ -172,7 +172,7 @@
             // 
             // button_Save
             // 
-            button_Save.Location = new Point(651, 301);
+            button_Save.Location = new Point(651, 292);
             button_Save.Name = "button_Save";
             button_Save.Size = new Size(61, 23);
             button_Save.TabIndex = 13;
@@ -182,7 +182,7 @@
             // 
             // button_Restore
             // 
-            button_Restore.Location = new Point(713, 301);
+            button_Restore.Location = new Point(713, 292);
             button_Restore.Name = "button_Restore";
             button_Restore.Size = new Size(75, 23);
             button_Restore.TabIndex = 14;
