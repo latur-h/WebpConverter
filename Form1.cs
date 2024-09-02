@@ -172,6 +172,14 @@ namespace WebpConverter
             radioButton_LastPath.Checked = true;
 
             Webp._refreshCounter += _refreshCounter;
+            
+            try 
+            {
+                string version = System.IO.File.ReadAllText(Directory.GetFiles("../../../", "version.txt", SearchOption.AllDirectories)[0]);
+
+                RTConsole.Write($"Current version: {version}\n");
+            }
+            catch { }
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
