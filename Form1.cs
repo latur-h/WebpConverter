@@ -177,7 +177,7 @@ namespace WebpConverter
             {
                 string version = System.IO.File.ReadAllText(Directory.GetFiles("../../../", "version.txt", SearchOption.AllDirectories)[0]);
 
-                RTConsole.Write($"Current version: {version}\n");
+                label_Version.Text = version;
             }
             catch { }
         }

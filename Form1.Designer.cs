@@ -43,6 +43,7 @@
             label3 = new Label();
             button_Save = new Button();
             button_Restore = new Button();
+            label_Version = new Label();
             groupBox_Path.SuspendLayout();
             SuspendLayout();
             // 
@@ -145,29 +146,29 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(657, 198);
+            label1.Location = new Point(651, 198);
             label1.Name = "label1";
-            label1.Size = new Size(14, 15);
+            label1.Size = new Size(42, 15);
             label1.TabIndex = 10;
-            label1.Text = "X";
+            label1.Text = "Width:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(657, 227);
+            label2.Location = new Point(651, 227);
             label2.Name = "label2";
-            label2.Size = new Size(14, 15);
+            label2.Size = new Size(46, 15);
             label2.TabIndex = 11;
-            label2.Text = "Y";
+            label2.Text = "Height:";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(644, 275);
             label3.Name = "label3";
-            label3.Size = new Size(45, 15);
+            label3.Size = new Size(48, 15);
             label3.TabIndex = 12;
-            label3.Text = "Quality";
+            label3.Text = "Quality:";
             // 
             // button_Save
             // 
@@ -189,11 +190,21 @@
             button_Restore.UseVisualStyleBackColor = true;
             button_Restore.Click += button_Restore_Click;
             // 
+            // label_Version
+            // 
+            label_Version.AutoSize = true;
+            label_Version.Enabled = false;
+            label_Version.Location = new Point(750, 426);
+            label_Version.Name = "label_Version";
+            label_Version.Size = new Size(0, 15);
+            label_Version.TabIndex = 5;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label_Version);
             Controls.Add(button_Restore);
             Controls.Add(button_Save);
             Controls.Add(label3);
@@ -233,5 +244,6 @@
         private Label label3;
         private Button button_Save;
         private Button button_Restore;
+        private Label label_Version;
     }
 }
