@@ -150,7 +150,7 @@ namespace WebpConverter
                 textBox_Quality.Text = userConfig?.defaultQuality.ToString();
             }
 
-            RTConsole.Write("Save operation is complete.");
+            RTConsole.Write("Save operation is complete.\n");
         }
         private void button_Restore_Click(object sender, EventArgs e)
         {
@@ -158,7 +158,7 @@ namespace WebpConverter
             textBox_Y.Text = userConfig?.defaultSize?["Y"].ToString();
             textBox_Quality.Text = userConfig?.defaultQuality.ToString();
 
-            RTConsole.Write("Restore operation is complete.");
+            RTConsole.Write("Restore operation is complete.\n");
         }
         private void Form1_Load(object sender, EventArgs e)
         {
