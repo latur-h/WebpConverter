@@ -1,5 +1,6 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace WebpConverter.dlls
         public delegate void refreshCounter(string file);
         public static event refreshCounter? _refreshCounter;
 
-        public static void Convert(int _x, int _y, WebpEncodingMethod method, string directory, params string[] files)
+        public static void Convert(int _x, int _y, int quality, WebpEncodingMethod method, string directory, params string[] files)
         {
             int _counter = 0;
 
@@ -22,7 +23,7 @@ namespace WebpConverter.dlls
             {
                 try
                 {
-                    using (SixLabors.ImageSharp.Image image = SixLabors.ImageSharp.Image.Load(i))
+                    using (SixLabors.ImageSharp.Image<Rgba32> image = SixLabors.ImageSharp.Image.Load<Rgba32>(i))
                     {
                         image.Mutate(x => x.Resize(_x, _y));
 
@@ -32,9 +33,10 @@ namespace WebpConverter.dlls
 
                         image.Save(Path.Combine(directory, webp, Path.GetFileNameWithoutExtension(i) + @".webp"), new WebpEncoder()
                         {
-                            Quality = 0,
+                            Quality = quality,
                             Method = method,
                             NearLossless = false,
+                            FileFormat = WebpFileFormatType.Lossy,
                             SkipMetadata = true
                         });
                     }

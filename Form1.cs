@@ -38,8 +38,8 @@ namespace WebpConverter
                     userConfig?.SaveSettings(lastPath: directory);
 
                     RTConsole.Write("Processing...");
-
-                    await Task.Run(() => Webp.Convert((int)userConfig?.defaultSize?["X"], (int)userConfig?.defaultSize?["Y"], (WebpEncodingMethod)userConfig?.defaultMethod, directory, files));
+                    
+                    await Task.Run(() => Webp.Convert((int)userConfig?.defaultSize?["X"], (int)userConfig?.defaultSize?["Y"], (int)userConfig?.defaultQuality, (WebpEncodingMethod)userConfig?.defaultMethod, directory, files));
 
                     RTConsole.Write("Convert have been successfuly completed!\n");
                 }
@@ -75,6 +75,7 @@ namespace WebpConverter
                         await Task.Run(() => Webp.Convert(
                             (int)userConfig?.defaultSize?["X"],
                             (int)userConfig?.defaultSize?["Y"],
+                            (int)userConfig?.defaultQuality,
                             (WebpEncodingMethod)userConfig?.defaultMethod,
                             i,
                             fileExtentions.SelectMany(ext => Directory.GetFiles(i, ext, SearchOption.TopDirectoryOnly)).ToArray()
