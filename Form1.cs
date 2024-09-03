@@ -1,3 +1,4 @@
+using SixLabors.ImageSharp.Formats.Webp;
 using System.IO;
 using System.Windows.Forms;
 using WebpConverter.dlls;
@@ -38,7 +39,7 @@ namespace WebpConverter
 
                     RTConsole.Write("Processing...");
 
-                    await Task.Run(() => Webp.Convert((int)userConfig?.defaultSize?["X"], (int)userConfig?.defaultSize?["Y"], directory, files));
+                    await Task.Run(() => Webp.Convert((int)userConfig?.defaultSize?["X"], (int)userConfig?.defaultSize?["Y"], (WebpEncodingMethod)userConfig?.defaultMethod, directory, files));
 
                     RTConsole.Write("Convert have been successfuly completed!\n");
                 }
@@ -74,6 +75,7 @@ namespace WebpConverter
                         await Task.Run(() => Webp.Convert(
                             (int)userConfig?.defaultSize?["X"],
                             (int)userConfig?.defaultSize?["Y"],
+                            (WebpEncodingMethod)userConfig?.defaultMethod,
                             i,
                             fileExtentions.SelectMany(ext => Directory.GetFiles(i, ext, SearchOption.TopDirectoryOnly)).ToArray()
                             ));
@@ -171,9 +173,47 @@ namespace WebpConverter
 
             radioButton_LastPath.Checked = true;
 
+            comboBox_Methods.Items.AddRange(
+                WebpEncodingMethod.Level0,
+                WebpEncodingMethod.Level1,
+                WebpEncodingMethod.Level2,
+                WebpEncodingMethod.Level3,
+                WebpEncodingMethod.Level4,
+                WebpEncodingMethod.Level5,
+                WebpEncodingMethod.Level6
+                );
+
+            switch(userConfig?.defaultMethod)
+            {
+                case WebpEncodingMethod.Level0:
+                    comboBox_Methods.SelectedIndex = 0;
+                    break;
+                case WebpEncodingMethod.Level1:
+                    comboBox_Methods.SelectedIndex = 1;
+                    break;
+                case WebpEncodingMethod.Level2:
+                    comboBox_Methods.SelectedIndex = 2;
+                    break;
+                case WebpEncodingMethod.Level3:
+                    comboBox_Methods.SelectedIndex = 3;
+                    break;
+                case WebpEncodingMethod.Level4:
+                    comboBox_Methods.SelectedIndex = 4;
+                    break;
+                case WebpEncodingMethod.Level5:
+                    comboBox_Methods.SelectedIndex = 5;
+                    break;
+                case WebpEncodingMethod.Level6:
+                    comboBox_Methods.SelectedIndex = 6;
+                    break;
+                default:
+                    comboBox_Methods.SelectedIndex = 1;
+                    break;
+            }
+
             Webp._refreshCounter += _refreshCounter;
-            
-            try 
+
+            try
             {
                 string version = System.IO.File.ReadAllText(Directory.GetFiles("../../../", "version.txt", SearchOption.AllDirectories)[0]);
 
@@ -184,6 +224,18 @@ namespace WebpConverter
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
 
+        }
+
+        private void comboBox_Methods_TextUpdate(object sender, EventArgs e)
+        {
+            comboBox_Methods.SelectedItem = userConfig?.defaultMethod;
+        }
+
+        private void comboBox_Methods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_Methods.SelectedIndex == -1) return;
+
+            userConfig?.SaveSettings(defaultMethod: (WebpEncodingMethod)comboBox_Methods.SelectedItem);
         }
     }
 }

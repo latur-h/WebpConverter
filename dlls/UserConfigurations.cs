@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft;
 using Newtonsoft.Json;
+using SixLabors.ImageSharp.Formats.Webp;
 
 namespace WebpConverter.dlls
 {
@@ -15,6 +16,7 @@ namespace WebpConverter.dlls
         public string? lastPath;
         public Dictionary<string, int>? defaultSize;
         public int? defaultQuality;
+        public WebpEncodingMethod? defaultMethod;
 
         private readonly string pathToConfig;
 
@@ -55,9 +57,10 @@ namespace WebpConverter.dlls
             lastPath = userConf.lastPath;
             defaultSize = userConf.defaultSize;
             defaultQuality = userConf.defaultQuality;
+            defaultMethod = userConf.defaultMethod;
         }
 
-        public void SaveSettings(string? defaultPath = null, string? lastPath = null, int? defaultSize_X = null, int? defaultSize_Y = null, int? defaultQuality = null)
+        public void SaveSettings(string? defaultPath = null, string? lastPath = null, int? defaultSize_X = null, int? defaultSize_Y = null, int? defaultQuality = null, WebpEncodingMethod? defaultMethod = null)
         {
             if (defaultPath is not null) this.defaultPath = defaultPath;
             if (lastPath is not null) this.lastPath = lastPath;
@@ -66,6 +69,8 @@ namespace WebpConverter.dlls
             if (defaultSize_Y is not null) this.defaultSize["Y"] = (int)defaultSize_Y;
 
             if (defaultQuality is not null) this.defaultQuality = defaultQuality;
+
+            if (defaultMethod is not null) this.defaultMethod = defaultMethod;
 
             string userConf = JsonConvert.SerializeObject(this);
 

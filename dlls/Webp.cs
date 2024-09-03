@@ -14,7 +14,7 @@ namespace WebpConverter.dlls
         public delegate void refreshCounter(string file);
         public static event refreshCounter? _refreshCounter;
 
-        public static void Convert(int _x, int _y, string directory, params string[] files)
+        public static void Convert(int _x, int _y, WebpEncodingMethod method, string directory, params string[] files)
         {
             int _counter = 0;
 
@@ -33,7 +33,7 @@ namespace WebpConverter.dlls
                         image.Save(Path.Combine(directory, webp, Path.GetFileNameWithoutExtension(i) + @".webp"), new WebpEncoder()
                         {
                             Quality = 0,
-                            Method = WebpEncodingMethod.Fastest,
+                            Method = method,
                             NearLossless = false
                         });
                     }

@@ -44,6 +44,7 @@
             button_Save = new Button();
             button_Restore = new Button();
             label_Version = new Label();
+            comboBox_Methods = new ComboBox();
             groupBox_Path.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,7 +72,7 @@
             // 
             // button_Convert_Directory
             // 
-            button_Convert_Directory.Location = new Point(651, 96);
+            button_Convert_Directory.Location = new Point(651, 67);
             button_Convert_Directory.Name = "button_Convert_Directory";
             button_Convert_Directory.Size = new Size(137, 47);
             button_Convert_Directory.TabIndex = 2;
@@ -126,6 +127,7 @@
             // 
             textBox_X.Location = new Point(695, 177);
             textBox_X.Name = "textBox_X";
+            textBox_X.PlaceholderText = "0-5000";
             textBox_X.Size = new Size(93, 23);
             textBox_X.TabIndex = 7;
             // 
@@ -133,6 +135,7 @@
             // 
             textBox_Y.Location = new Point(695, 206);
             textBox_Y.Name = "textBox_Y";
+            textBox_Y.PlaceholderText = "0-5000";
             textBox_Y.Size = new Size(93, 23);
             textBox_Y.TabIndex = 8;
             // 
@@ -140,6 +143,7 @@
             // 
             textBox_Quality.Location = new Point(695, 254);
             textBox_Quality.Name = "textBox_Quality";
+            textBox_Quality.PlaceholderText = "0-100";
             textBox_Quality.Size = new Size(93, 23);
             textBox_Quality.TabIndex = 9;
             // 
@@ -199,11 +203,22 @@
             label_Version.Size = new Size(0, 15);
             label_Version.TabIndex = 5;
             // 
+            // comboBox_Methods
+            // 
+            comboBox_Methods.FormattingEnabled = true;
+            comboBox_Methods.Location = new Point(651, 136);
+            comboBox_Methods.Name = "comboBox_Methods";
+            comboBox_Methods.Size = new Size(137, 23);
+            comboBox_Methods.TabIndex = 15;
+            comboBox_Methods.SelectedIndexChanged += comboBox_Methods_SelectedIndexChanged;
+            comboBox_Methods.TextUpdate += comboBox_Methods_TextUpdate;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(comboBox_Methods);
             Controls.Add(label_Version);
             Controls.Add(button_Restore);
             Controls.Add(button_Save);
@@ -218,6 +233,8 @@
             Controls.Add(button_Convert_Directory);
             Controls.Add(button_Convert_File);
             Controls.Add(rt_Console);
+            MaximumSize = new Size(816, 489);
+            MinimumSize = new Size(816, 489);
             Name = "Form1";
             Text = "Webp Converter";
             FormClosed += Form1_FormClosed;
@@ -245,5 +262,6 @@
         private Button button_Save;
         private Button button_Restore;
         private Label label_Version;
+        public ComboBox comboBox_Methods;
     }
 }
