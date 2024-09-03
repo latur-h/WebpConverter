@@ -34,7 +34,8 @@ namespace WebpConverter.dlls
                         {
                             Quality = 0,
                             Method = method,
-                            NearLossless = false
+                            NearLossless = false,
+                            SkipMetadata = true
                         });
                     }
 
