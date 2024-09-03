@@ -162,6 +162,17 @@ namespace WebpConverter
 
             RTConsole.Write("Restore operation is complete.\n");
         }
+        private void comboBox_Methods_TextUpdate(object sender, EventArgs e)
+        {
+            comboBox_Methods.SelectedItem = userConfig?.defaultMethod;
+        }
+
+        private void comboBox_Methods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_Methods.SelectedIndex == -1) return;
+
+            userConfig?.SaveSettings(defaultMethod: (WebpEncodingMethod)comboBox_Methods.SelectedItem);
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             RTConsole.Init(ref rt_Console);
@@ -215,7 +226,7 @@ namespace WebpConverter
 
             try
             {
-                string version = System.IO.File.ReadAllText(Directory.GetFiles("../../../", "version.txt", SearchOption.AllDirectories)[0]);
+                string version = System.IO.File.ReadAllText(Directory.GetFiles("../../../", "version.txt", SearchOption.TopDirectoryOnly)[0]);
 
                 label_Version.Text = version;
             }
@@ -224,18 +235,6 @@ namespace WebpConverter
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
 
-        }
-
-        private void comboBox_Methods_TextUpdate(object sender, EventArgs e)
-        {
-            comboBox_Methods.SelectedItem = userConfig?.defaultMethod;
-        }
-
-        private void comboBox_Methods_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox_Methods.SelectedIndex == -1) return;
-
-            userConfig?.SaveSettings(defaultMethod: (WebpEncodingMethod)comboBox_Methods.SelectedItem);
         }
     }
 }
