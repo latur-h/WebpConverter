@@ -17,8 +17,6 @@ namespace WebpConverter.dlls
 
         public static void Convert(int _x, int _y, int quality, WebpEncodingMethod method, string directory, params string[] files)
         {
-            int _counter = 0;
-
             Parallel.ForEach(files, (i) =>
             {
                 try
@@ -42,7 +40,7 @@ namespace WebpConverter.dlls
                     }
 
                     _refreshCounter?.Invoke(i);
-                } catch { RTConsole.Write($"{++_counter}:{i} is not image or damaged!", System.Drawing.Color.Red); }
+                } catch { RTConsole.Write($"{i} is not image or damaged!", System.Drawing.Color.Red); }
             });
         }
     }

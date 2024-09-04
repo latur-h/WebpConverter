@@ -8,11 +8,13 @@ namespace WebpConverter
 {
     public partial class Form1 : Form
     {
-        UserConfigurations? userConfig;
+        UserConfigurations userConfig;
 
         public Form1()
         {
             InitializeComponent();
+
+            userConfig = new UserConfigurations();
         }
 
         private async void button_Convert_File_Click(object sender, EventArgs e)
@@ -33,13 +35,14 @@ namespace WebpConverter
                 {
                     string[] files = openFileDialog.FileNames;
 
-                    string? directory = Path.GetDirectoryName(files[0]);
+                    string directory = Path.GetDirectoryName(files[0]) ?? string.Empty;
 
-                    userConfig?.SaveSettings(lastPath: directory);
+                    if(userConfig is not null)
+                    userConfig.SaveSettings(lastPath: directory);
 
                     RTConsole.Write("Processing...");
                     
-                    await Task.Run(() => Webp.Convert((int)userConfig?.defaultSize?["X"], (int)userConfig?.defaultSize?["Y"], (int)userConfig?.defaultQuality, (WebpEncodingMethod)userConfig?.defaultMethod, directory, files));
+                    await Task.Run(() => { if (userConfig is not null) Webp.Convert(userConfig.defaultWidth, userConfig.defaultHeight, userConfig.defaultQuality, userConfig.defaultMethod, directory, files); });
 
                     RTConsole.Write("Convert have been successfuly completed!\n");
                 }
@@ -72,14 +75,17 @@ namespace WebpConverter
 
                         string[] fileExtentions = new string[] { "*.png", "*.jpg", "*.jpeg", "*.bmp" };
 
-                        await Task.Run(() => Webp.Convert(
-                            (int)userConfig?.defaultSize?["X"],
-                            (int)userConfig?.defaultSize?["Y"],
-                            (int)userConfig?.defaultQuality,
-                            (WebpEncodingMethod)userConfig?.defaultMethod,
-                            i,
-                            fileExtentions.SelectMany(ext => Directory.GetFiles(i, ext, SearchOption.TopDirectoryOnly)).ToArray()
-                            ));
+                        await Task.Run(() => {
+                            if (userConfig is not null)
+                                Webp.Convert(
+                                    userConfig.defaultWidth,
+                                    userConfig.defaultHeight,
+                                    userConfig.defaultQuality,
+                                    userConfig.defaultMethod,
+                                    i,
+                                    fileExtentions.SelectMany(ext => Directory.GetFiles(i, ext, SearchOption.TopDirectoryOnly)).ToArray()
+                                    );
+                        });
 
                         RTConsole.Write($"'{i}' is complete.\n");
                     }
@@ -127,21 +133,22 @@ namespace WebpConverter
             int quality = 0;
 
             if (int.TryParse(textBox_X.Text, out x) && x >= 0 && x <= 5000)
-                userConfig?.SaveSettings(defaultSize_X: x);
+                userConfig?.SaveSettings(defaultWidth: x);
             else
             {
                 RTConsole.Write("X can only be the numbers 0-5000!\n", Color.Red);
 
-                textBox_X.Text = userConfig?.defaultSize?["X"].ToString();
+                textBox_X.Text = userConfig.defaultWidth.ToString();
             }
 
             if (int.TryParse(textBox_Y.Text, out y) && y >= 0 && y <= 5000)
-                userConfig?.SaveSettings(defaultSize_Y: y);
+                userConfig?.SaveSettings(defaultHeight: y);
             else
             {
                 RTConsole.Write("Y can only be the numbers 0-5000!\n", Color.Red);
-
-                textBox_Y.Text = userConfig?.defaultSize?["Y"].ToString();
+                
+                if (userConfig is not null)
+                    textBox_Y.Text = userConfig.defaultHeight.ToString();
             }
 
             if (int.TryParse(textBox_Quality.Text, out quality) && quality >= 0 && quality <= 100)
@@ -157,8 +164,8 @@ namespace WebpConverter
         }
         private void button_Restore_Click(object sender, EventArgs e)
         {
-            textBox_X.Text = userConfig?.defaultSize?["X"].ToString();
-            textBox_Y.Text = userConfig?.defaultSize?["Y"].ToString();
+            textBox_X.Text = userConfig.defaultWidth.ToString();
+            textBox_Y.Text = userConfig.defaultHeight.ToString();
             textBox_Quality.Text = userConfig?.defaultQuality.ToString();
 
             RTConsole.Write("Restore operation is complete.\n");
@@ -172,15 +179,15 @@ namespace WebpConverter
         {
             if (comboBox_Methods.SelectedIndex == -1) return;
 
-            userConfig?.SaveSettings(defaultMethod: (WebpEncodingMethod)comboBox_Methods.SelectedItem);
+            userConfig?.SaveSettings(defaultMethod: comboBox_Methods.SelectedItem is not null ? (WebpEncodingMethod)comboBox_Methods.SelectedItem : WebpEncodingMethod.Level4);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             RTConsole.Init(ref rt_Console);
             userConfig = new(@"data\userConfig.cfg");
 
-            textBox_X.Text = userConfig?.defaultSize?["X"].ToString();
-            textBox_Y.Text = userConfig?.defaultSize?["Y"].ToString();
+            textBox_X.Text = userConfig.defaultWidth.ToString();
+            textBox_Y.Text = userConfig.defaultHeight.ToString();
             textBox_Quality.Text = userConfig?.defaultQuality.ToString();
 
             radioButton_LastPath.Checked = true;

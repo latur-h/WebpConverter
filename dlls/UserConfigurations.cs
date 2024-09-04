@@ -14,11 +14,14 @@ namespace WebpConverter.dlls
     {
         public string? defaultPath;
         public string? lastPath;
-        public Dictionary<string, int>? defaultSize;
-        public int? defaultQuality;
-        public WebpEncodingMethod? defaultMethod;
 
-        private readonly string pathToConfig;
+        public int defaultWidth;
+        public int defaultHeight;
+
+        public int defaultQuality;
+        public WebpEncodingMethod defaultMethod;
+
+        private readonly string? pathToConfig;
 
         public UserConfigurations(string pathToConfig)
         {
@@ -28,8 +31,8 @@ namespace WebpConverter.dlls
             {
                 UserConfigurations? tempConf;
 
-                if (!Directory.Exists(Path.GetDirectoryName(pathToConfig)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(pathToConfig));
+                if (!Directory.Exists(Path.GetDirectoryName(pathToConfig)))                
+                    Directory.CreateDirectory(Path.GetDirectoryName(pathToConfig) ?? string.Empty);
                 if (!File.Exists(pathToConfig))
                 {
                     tempConf = GetDefault();
@@ -55,28 +58,30 @@ namespace WebpConverter.dlls
         {
             defaultPath = userConf.defaultPath;
             lastPath = userConf.lastPath;
-            defaultSize = userConf.defaultSize;
+            defaultWidth = userConf.defaultWidth;
+            defaultHeight = userConf.defaultHeight;
             defaultQuality = userConf.defaultQuality;
             defaultMethod = userConf.defaultMethod;
         }
 
-        public void SaveSettings(string? defaultPath = null, string? lastPath = null, int? defaultSize_X = null, int? defaultSize_Y = null, int? defaultQuality = null, WebpEncodingMethod? defaultMethod = null)
+        public void SaveSettings(string? defaultPath = null, string? lastPath = null, int? defaultWidth = null, int? defaultHeight = null, int? defaultQuality = null, WebpEncodingMethod? defaultMethod = null)
         {
             if (defaultPath is not null) this.defaultPath = defaultPath;
             if (lastPath is not null) this.lastPath = lastPath;
 
-            if (defaultSize_X is not null) this.defaultSize["X"] = (int)defaultSize_X;
-            if (defaultSize_Y is not null) this.defaultSize["Y"] = (int)defaultSize_Y;
+            if (defaultWidth is not null) this.defaultWidth = (int)defaultWidth;
+            if (defaultHeight is not null) this.defaultHeight = (int)defaultHeight;
 
-            if (defaultQuality is not null) this.defaultQuality = defaultQuality;
+            if (defaultQuality is not null) this.defaultQuality = (int)defaultQuality;
 
-            if (defaultMethod is not null) this.defaultMethod = defaultMethod;
+            if (defaultMethod is not null) this.defaultMethod = (WebpEncodingMethod)defaultMethod;
 
             string userConf = JsonConvert.SerializeObject(this);
 
             try
             {
-                File.WriteAllText(pathToConfig, userConf);
+                if (!string.IsNullOrEmpty(pathToConfig))
+                    File.WriteAllText(pathToConfig, userConf);
             }
             catch (Exception e) { RTConsole.Write($"Unable to save user configuration file. {e.Message}", Color.Red); };
         }
@@ -85,11 +90,8 @@ namespace WebpConverter.dlls
         {
             UserConfigurations userConfig = new();
 
-            userConfig.defaultSize = new Dictionary<string, int>
-            {
-                { "X", 656 },
-                { "Y", 630 }
-            };
+            defaultWidth = 656;
+            defaultHeight = 630;
 
             userConfig.defaultQuality = 0;
 
@@ -98,12 +100,8 @@ namespace WebpConverter.dlls
 
         public void Dispose()
         {
-            defaultSize?.Clear();
-            defaultSize = null;
-
             defaultPath = null;
             lastPath = null;
-            defaultQuality = null;
         }
     }
 }
